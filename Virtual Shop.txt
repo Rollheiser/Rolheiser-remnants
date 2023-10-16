@@ -1,0 +1,48 @@
+# In this program, the user only can buy 3 things, in this block-code I created the list of food available and a dictionary of their price
+car_market = 0
+limit_products = 3
+purchased_products = []
+price = []
+
+list_foods = ["Milk", "Meat", "Chicken", "Water", "Coca-Cola", "Coca-Cola 1.5", "Rice", "Oil"]
+poster = {"milk": 5000, "meat": 10000, "chicken": 9000, "water": 2000, "coca-cola": 2500, "coca-cola 1.5": 6000, "rice": 3000, "oil": 5000}
+#------------------------------------------
+print("Welcome to Shopee")
+print("Here you can buy a lot of things ...well, only 7")
+print("There is the list")
+print(list_foods)
+print("Enter (below) the products that you want, also if you want to check the price of the products, enter \"c\", if you don't want to, enter \"n\"")
+#------------------------------------------
+ans = input()
+
+# Here, the program asks the user for a product to be checked, the user enter a product and the program returns the value of it, if it wants to stop, just enter "none"
+if ans == "c":
+    while True:
+        search = input("\nCheck the price of (if you want to exit, enter \"none\"): ")
+        if search in poster:
+            price_of = poster[search]
+            print(f"The value of {search} is {price_of}")
+        elif search == "none":
+            break
+
+elif ans == "n":
+    print("")
+
+# Now the user can enter the products that it wants, as much the user enters products, as much the limits ran off, the products are added to the list of car market and their price
+while True:
+    if car_market < limit_products:
+        print("\nEnter the products that you want")
+        product_wanted = input("")
+        purchased_products.append(product_wanted)
+        price.append(poster[product_wanted])
+    
+        car_market += 1
+    
+    else:
+        print("\nNo more products")
+        break
+# Finally, the pc sum the price list to figure the total price and prints the list of products
+
+total = sum(price)
+print(f"\nThe list of the products that you purchased: {purchased_products}")
+print(f"Total: ${total}")
