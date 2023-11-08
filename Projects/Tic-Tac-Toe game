@@ -1,0 +1,128 @@
+import random
+
+# The board of the game with its parts
+board_tictactoe = {"1-top": " ", "2-top": " ", "3-top": " ",
+                   "1-mid": " ", "2-mid": " ", "3-mid": " ",
+                   "1-low": " ", "2-low": " ", "3-low": " "}
+
+# In these two blocks of code we check whether the player have won or it's draw
+def check_winner(board, player):
+    for row in ["top", "mid", "low"]:
+        if (board[f"1-{row}"] == board[f"2-{row}"] == board[f"3-{row}"] == player):
+            return True
+
+    for col in ["1", "2", "3"]:
+        if (board[f"{col}-top"] == board[f"{col}-mid"] == board[f"{col}-low"] == player):
+            return True
+
+    if (board["1-top"] == board["2-mid"] == board["3-low"] == player) or (board["1-low"] == board["2-mid"] == board["3-top"] == player):
+        return True
+
+def check_draw(board):
+    for space in board.values():
+        if space == " ":
+            return False
+    return True
+
+def printboard(board):
+    print("\n" + board["1-top"] + " |" + board["2-top"] + " |" + board["3-top"])
+    print("--+--+--")
+    print(board["1-mid"] + " |" + board["2-mid"] + " |" + board["3-mid"])
+    print("--+--+--")
+    print(board["1-low"] + " |" + board["2-low"] + " |" + board["3-low"])
+
+class players():
+    def __init__(self):
+        self.x = "X"
+        self.o = "O"
+
+    def player1_choice(self):
+        for i in range(9):
+            printboard(board_tictactoe)
+            turn = self.x
+            print(f'Turn for {turn}. Move on which space?')
+            move = input()
+            if board_tictactoe.get(move) == " ":
+                board_tictactoe[move] = turn
+
+            else:
+                print("Invalid move. Space already taken.")
+                continue  
+
+            if check_winner(board_tictactoe, turn):
+                print(f"Player 1 {turn} wins!")
+                break
+            if check_draw(board_tictactoe):
+                print("It's a draw")
+                break
+
+            # Computer's turn
+            turn = self.o
+            cpter_choice = random.choice(([k for k, v in board_tictactoe.items() if v == " "]))
+            board_tictactoe[cpter_choice] = turn
+
+            if check_winner(board_tictactoe, turn):
+                print(f"Computer {turn} wins!")
+                break
+            if check_draw(board_tictactoe):
+                print("It's a draw")
+                break
+
+    def player2_choice(self):
+        for i in range(9):
+            printboard(board_tictactoe)
+            turn = self.o
+            print(f'Turn for {turn}. Move on which space?')
+            move = input()
+            if board_tictactoe.get(move) == " ":
+                board_tictactoe[move] = turn
+            else:
+                print("Invalid move. Space already taken.")
+                continue  
+
+            if check_winner(board_tictactoe, turn):
+                print(f"Player 2 {turn} wins!")
+                break
+            if check_draw(board_tictactoe):
+                print("It's a draw")
+                break
+
+            # Computer's turn
+            turn = self.x
+            cpter_choice = random.choice([k for k, v in board_tictactoe.items() if v == " "])
+            board_tictactoe[cpter_choice] = turn
+
+            if check_winner(board_tictactoe, turn):
+                print(f"Computer {turn} wins!")
+                break
+            if check_draw(board_tictactoe):
+                print("It's a draw")
+                break
+
+current_players = players()
+
+print("Welcome to the \"tic tac toe game\"")
+print("Which player do you want to be?")
+print("Type \"yes\" to select one (press \"enter\" if you don't want whichever option)")
+
+while True:
+    player1 = input("\nPlayer 1 (X) = ")
+    player2 = input("Player 2 (O) = ")
+
+    if player1 == "yes":
+        print("You will be \"X\"")
+        break
+    elif player2 == "yes":
+        print("You will be \"O\"")
+        break
+    else:
+        print("Select an option")
+
+if player1 == "yes":
+    current_players.player1_choice()
+
+elif player2 == "yes":
+    current_players.player2_choice()
+
+else:
+    ""
