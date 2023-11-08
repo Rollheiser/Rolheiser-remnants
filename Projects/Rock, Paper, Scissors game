@@ -1,0 +1,89 @@
+import random as r
+
+options = ["rock", "paper", "scissors"]
+
+score = 0
+tries = 0
+no_tries = False
+limit = 3
+
+def option_game():
+    print("-----------")
+    print("Options: ")
+    print("1. rock")
+    print("2. paper")
+    print("3. scissors")
+    print("-----------")
+    
+print("---Welcome to \"rock, paper, scissors\" game---")
+print("\nDo you wanna play?")
+
+answer = input()
+
+if answer.lower() == "yes":
+    print("\nOkay, let's begin")
+
+elif answer.lower() == "no":
+    print("\nOkay, goodbye")
+    exit()
+
+while tries < limit:
+    print("\nChoose one option")
+    option_game()
+
+    player_choice = input("Your choice: ").lower()
+
+    while player_choice not in options:
+        print("\nYou need to choice one of the options")
+        player_choice = input("Your choice: ").lower()
+
+    computer = r.choice(options)
+
+    if player_choice == computer:
+        print("Computer: ", computer)
+        print("Player: ", player_choice)
+        print("Tie")
+     
+    elif player_choice == "rock":
+        if computer == "paper":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You lose")
+
+        if computer == "scissors":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You win")
+
+            score += 1
+
+    elif player_choice == "paper":
+        if computer == "rock":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You win")
+
+            score += 1
+
+        if computer == "scissors":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You lose")
+
+    elif player_choice == "scissors":
+        if computer == "rock":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You lose")
+
+        if computer == "paper":
+            print("Computer: ", computer)
+            print("Player: ", player_choice)
+            print("You win")
+
+            score += 1
+
+    tries += 1
+
+print("\nGame over")
+print(f"You score: {score}/3")       
