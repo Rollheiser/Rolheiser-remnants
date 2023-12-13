@@ -1,0 +1,138 @@
+from collections import deque
+import string as st 
+import random as r
+
+countaccount = 0
+#---------------------------------------------------------------
+def GeneratePassword():
+    return "".join(r.choices(st.ascii_letters + st.digits, k=8))
+#---------------------------------------------------------------
+class Stack:
+    def __init__(self):
+        self.pages = deque() 
+    def AddPage(self, data):
+        self.pages.append(data)
+        return #Add pages as the user navegates through the page
+    def DelPage(self):
+        if self.pages:
+            return self.pages.pop() #Delete pages
+        else:
+            return None
+    def PrintPages(self):
+        print(" -> ".join(self.pages))
+#----------------------------------------------------------------------------------------------------
+class PersonalData:
+    def __init__(self, firstname=str, lastname=str, day_birth=int, month_birth=int, year_birth=int):
+        self.firstname = str(firstname)
+        self.lastname = str(lastname)
+        self.day_birth = str(day_birth)
+        self.month_birth = str(month_birth)
+        self.year_birth = str(year_birth)
+
+        print(f"\n{firstname} {lastname} | {self.day_birth}/{self.month_birth}/{self.year_birth}")
+#----------------------------------------------------------------------------------------------------
+class Account:
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+    
+    def CreateAcc(self):
+        accounts = {}
+
+        global countaccount
+        countaccount += 1
+
+        accounts.setdefault(f"Account {countaccount}", [self.username, self.password, self.email])
+        print(accounts)
+#---------------------------------------------------------------------------------------------------
+pages = Stack()
+
+def printout(page):
+    pages.AddPage(page)
+    pages.PrintPages()
+
+printout("Main page")
+#--------------------------------------------------------------------------------------------------------------
+while True:
+    print("\n--------------------------------------------------------------------------------------------------------------------------------------")
+    print("Welcome to this website! (at least a simulation of one)".center(130))
+    print("In this simulation, you can login and enter to your account with your username or e-mail".center(130))
+    print("and your password".center(130))
+    print("\nHere's few options: ")
+    print("- Login (Enter L)")
+    print("- About (Enter A)")
+    print("- Exit (Press enter)")
+
+    answer = input("\nChoice: ")
+#--------------------------------------------------------------------------------------------------------------
+    if answer == "":
+        exit()
+    elif answer.lower() == "a" or answer.upper() == "A":
+        print("\n")
+        print("----------------------------------------------------------------------------------------------")
+        printout("About")
+        print("\nAbout the page:")
+        print("This is one of my future big projets (the first one), the idea surges when I was looking for")
+        print("projects to build and add to my portfolio, also I did a diagram and pseudocode to build this")
+        print("enjoy the website simulation!")
+
+        returning = input("\nEnter back to return: ")
+        if returning.lower() == "back":
+            pages.DelPage()
+            continue
+#-------------------------------------------------------------------------------------------------------------
+    elif answer.lower() == "l" or answer.upper() == "L":
+        print("\n")
+        print("-----------------------------------------------------")
+        printout("Login")
+        print("\n")
+        print("- Back (B)")
+        print("- Procceed to login (L)")
+        print("- Create account (enter C)")
+
+        answer = input("\nOption selected: ")
+#-------------------------------------------------------------------------------------------------------------
+        if answer.lower() == "b" or answer.upper() == "B":
+            pages.DelPage()
+            continue
+        elif answer.lower() == "l" or answer.upper() == "L":
+            print("--------------------------------------------------------------")
+            printout("Login to account")
+            print(f"\n{'Enter your username: ':>65}", end="")
+            answer_username = input()
+            print(f"{'Enter your password: ':>65}", end="")
+            answer_password = input()
+            break
+        elif answer.lower() == "c" or answer.upper() == "C":
+            print("--------------------------------------------------------------")
+            printout("Creating account")
+            print("\nPersonal data: ")
+            while True:
+                try:
+                    firstn = str(input("\nEnter your first name: "))
+                    lastn = str(input("Enter your last name: "))
+                    day = int(input("Enter the day of your birth: "))
+                    month = int(input("Enter the month of your month: "))
+                    year = int(input("Enter the year of your month: "))
+                    break
+                except:
+                    print("Enter the right characters. (name > letters, dates > numbers)")
+
+            PersonalData(firstn, lastn, day, month, year)
+
+            print("\nAccount data: ")
+            while True:
+                try:
+                    usern = input("\nEnter your username: ")
+                    password = input("Enter your password: ")
+                    email = input("Enter your e-mail: ")
+
+                    Acc = Account(usern, password, email)
+                    print("\n")
+                    Acc.CreateAcc()
+                    break
+                except:
+                    print("\nError, try again\n")
+    
+    break
