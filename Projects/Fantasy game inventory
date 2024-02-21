@@ -1,0 +1,26 @@
+# This code is only use for show the rewards (and the amount as well), not the full updated inventory
+player1_inventory = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+
+def displayInventory(inventory):
+    print("Inventory:")
+    item_total = 0
+    for k, v in inventory.items():
+        print(f"{str(v)} {k}")
+        item_total += v
+    print(f"Total number of items: {str(item_total)}")
+
+player2_inventory = {"gold coin": 2, "dagger": 1, "rope": 1}
+dragonLoot = ["gold coin", "dagger", "gold coin", "gold coin", "ruby"]
+
+def AddToInventory(inventory, added_items):
+    print("Rewards gained:")
+    for i in added_items:
+        print(f" - {i}")
+
+    print("\nUpdated inventory:")
+    for m in added_items:
+        inventory[m] = added_items.count(m)
+
+    print(inventory)
+
+AddToInventory(player2_inventory, dragonLoot)
