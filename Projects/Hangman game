@@ -1,0 +1,50 @@
+errors_comitted = 0
+
+word_game = "hello"
+word_gaps = []
+
+def show_word(word, guessed_letters):
+    result = ""
+    for letter in word:
+        if letter.lower() in guessed_letters:
+            result += letter + " "
+        else:
+            result += "_ "
+    return result
+#-----------------------------------------------------
+print("Hello! Welcome to \"hangman\" game, \nconsists of guess each letter until finally discover the word")
+
+while True:
+    print("Do you want to play? Y/N\n")
+    answer = input()
+
+    if answer in ["yes", "y", "Y"]:
+        print("\nLet's get started")
+        break
+    elif answer in ["no", "n", "N"]:
+        print("\nOkay, bye !")
+        break
+    else:
+        print("Introduce a valid word\n")
+#------------------------------------------------------
+print("Guess letter per letter\n")
+while errors_comitted < 6:
+    print(f"Errors comitted > {errors_comitted}\n".rjust(128))
+    
+    print(show_word(word_game, word_gaps))
+
+    guess = input("\nGuess = ").lower()
+
+    if guess in word_game.lower():
+        word_gaps.append(guess)
+        print("\nCorrect!")
+
+    else:
+        print("\nYou've got an error\n")
+        errors_comitted += 1
+        if errors_comitted == 6:
+            print("You lost")
+
+    if all(guess in word_gaps for guess in word_game.lower()):
+        print(f"\nCongratulations! Word guessed: {word_game}")
+        break
