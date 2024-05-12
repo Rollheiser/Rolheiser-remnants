@@ -1,0 +1,110 @@
+import math as mt
+
+options_operations = {1: "Addition", 2: "Subtraction", 3: "Multiplication", 4: "Divide",
+                    5: "Raise", 6:"Root", 7: "Percentage", 8: "Logarithms"}
+def options(dictio):
+    print("\nHere's the options:")
+    n = 1
+    for v in dictio.values():
+        print(f"{n}.- {v}")
+        n += 1
+#----------------
+class Numbers:
+    def __init__(self, n1, n2):
+        self.n1 = n1
+        self.n2 = n2
+        
+    def addition(self):
+        return self.n1 + self.n2    
+    def subtraction(self):
+        return self.n1 - self.n2    
+    
+    def divide(self):
+        try:
+            self.n2 != 0
+            return self.n1 / self.n2
+        except:
+            print("Error, try again")
+
+    def multiplication(self):
+        return self.n1 * self.n2    
+    def raisepow(self):
+        return self.n1 ** self.n2
+    
+    def root(self):
+        if self.n1 > 3:
+            return round(self.n2 ** (1 / self.n1))
+        elif self.n1 == 3:
+            return round(mt.cbrt(self.n2))
+        else:
+            return round(mt.sqrt(self.n2))
+        
+    def percentage(self):
+        return (self.n1 * self.n2) / 100
+    
+    def logarithms(self):
+        if self.n1 == 2:
+            return mt.log2(self.n2)
+        elif self.n1 == 10:
+            return mt.log10(self.n2)
+        else:
+            return mt.log(self.n2, self.n1)
+#----------------
+print("Hi! Welcome to the calculator, want to proceed?\n")
+answ = input("Type \"y\" for Yes/\"n\" for No: ")
+
+while True:
+    if answ in ["y", "Y", "yes", "YES"]:
+        print("\nLet's start")
+        break
+    elif answ in ["n", "N", "no", "NO"]:
+        print("\nBye!")
+        exit()
+    else:
+        print("\nIncorrect, try again")
+
+while True:
+    options(options_operations)
+
+    operation = input("\nSelect an option (by number): ")
+
+    num_1 = float(input("\nIntroduce the number: "))
+    num_2 = float(input("Introduce the other number: "))
+
+    numbers = Numbers(num_1, num_2)
+    print("\nHere's the result:\n")
+
+    match operation:
+        case "1":
+            print(numbers.addition())
+
+        case "2":
+            print(numbers.subtraction())
+
+        case "3":
+            print(numbers.multiplication())
+
+        case "4":
+            print(numbers.divide())
+
+        case "5":
+            print(numbers.raisepow())
+
+        case "6":
+            print(numbers.root())
+
+        case "7":
+            print(numbers.percentage())
+
+        case "8":
+            print(numbers.logarithms())
+
+    while True:
+        calc_continue = input("\nDo you want to continue? (type yes or no): ")
+        if calc_continue in ["yes", "YES"]:
+            break
+        elif calc_continue in ["no", "NO"]:
+            exit()
+        else:
+            print("try again")
+    continue
