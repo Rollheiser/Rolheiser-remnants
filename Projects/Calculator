@@ -1,13 +1,11 @@
 import math as mt
 
-options_operations = {1: "Addition", 2: "Subtraction", 3: "Multiplication", 4: "Divide",
-                    5: "Raise", 6:"Root", 7: "Percentage", 8: "Logarithms"}
-def options(dictio):
+options_operations = ["1.- Addition", "2.- Subtraction", "3.- Multiplication", "4.- Divide",
+                    "5.- Raise", "6.- Root", "7.- Percentage", "8.- Logarithms"]
+def options(operations):
     print("\nHere's the options:")
-    n = 1
-    for v in dictio.values():
-        print(f"{n}.- {v}")
-        n += 1
+    for i in operations:
+        print(i)
 #----------------
 class Numbers:
     def __init__(self, n1, n2):
