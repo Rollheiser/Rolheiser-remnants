@@ -1,0 +1,76 @@
+import random
+class Minheap:
+    
+    def __init__(self, size):
+        self.array = [0]*size
+        self.size = size
+        ## keeps track of the current elements in the heap
+        self.currsize = 0
+        
+    def getParentIndex(self, i):
+        return (i - 1) // 2
+    def getLeftchildIndex(self, i):
+        return (2 * i) + 1
+    def getRightchildIndex(self, i):
+        return (2 * i) + 2
+    ## this helper function is to check if Parent node exist or not
+    
+    def hasParent(self, i):
+        return self.getParentIndex(i) >= 0
+    ## so self.size will keep track of all the elements in the heap
+    ## so if you want a left child it must be at last level or above than it
+    ## so that is why we check left i with the current size of heap
+    ## same holds true for rightchild as well
+    
+    def hasLeftchild(self, i):
+        return self.getLeftchildIndex(i)<self.size
+    def hasRightchild(self, i):
+        return self.getRightchildIndex(i)<self.size
+    
+    def Parent(self, i):
+        return self.array[self.getParentIndex(i)]
+    def Leftchild(self,i):
+        return self.array[self.getLeftchildIndex(i)]
+    def Rightchild(self,i):
+        return self.array[self.getRightchildIndex(i)]
+
+    def IsFull(self):
+        return self.currsize == self.size
+    def Swap(self, i1, i2):
+        temp = self.array[i1]
+        self.array[i1] = self.array[i2]
+        self.array[i2] = temp
+    
+    def insert(self, data):
+        if self.IsFull():
+            print('Heap is Full')
+         ## always we will insert data at the end! maintaing the CBT property
+        self.array[self.currsize] = data
+        self.currsize += 1
+        
+        self.upheapify(self.currsize - 1)
+        
+    def upheapify(self, i):
+        if(self.hasParent(i) and self.Parent(i) > self.array[i]):
+            self.Swap(self.getParentIndex(i), i)
+            self.upheapify(self.getParentIndex(i))
+            
+    def removemin(self):
+        if self.size == 0:
+            print("Empty heap")
+        data = self.array[0]
+        self.array[0] = self.array[self.size-1]
+        self.size -= 1
+        ## always starting with root
+        self.heapifydown(0)
+        return data
+    
+    def heapifydown(self, i):
+        smallest = i
+        if self.hasLeftchild(i) and self.array[smallest] > self.leftchild(i):
+            smallest = self.getLeftchildIndex(i)
+        if self.hasRightchild(i) and self.array[smallest] > self.rightchild(i):
+            smallest = self.getRightchildIndex(i)
+        if smallest != i:
+            self.Swap(i, smallest)
+            self.heapifydown(smallest)
