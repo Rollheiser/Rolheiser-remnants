@@ -1,4 +1,3 @@
-import random
 class Minheap:
     
     def __init__(self, size):
@@ -17,15 +16,15 @@ class Minheap:
     
     def hasParent(self, i):
         return self.getParentIndex(i) >= 0
-    ## so self.size will keep track of all the elements in the heap
+    ## so self.currsize will keep track of all the elements in the heap
     ## so if you want a left child it must be at last level or above than it
     ## so that is why we check left i with the current size of heap
     ## same holds true for rightchild as well
     
     def hasLeftchild(self, i):
-        return self.getLeftchildIndex(i)<self.size
+        return self.getLeftchildIndex(i) < self.size
     def hasRightchild(self, i):
-        return self.getRightchildIndex(i)<self.size
+        return self.getRightchildIndex(i) < self.size
     
     def Parent(self, i):
         return self.array[self.getParentIndex(i)]
@@ -51,7 +50,7 @@ class Minheap:
         self.upheapify(self.currsize - 1)
         
     def upheapify(self, i):
-        if(self.hasParent(i) and self.Parent(i) > self.array[i]):
+        if (self.hasParent(i) and self.Parent(i) > self.array[i]):
             self.Swap(self.getParentIndex(i), i)
             self.upheapify(self.getParentIndex(i))
             
