@@ -1,0 +1,67 @@
+import sys
+
+class MaxHeap:
+
+    def __init__(self, maxsize):
+        
+        self.maxsize = maxsize
+        self.currsize = 0
+        self.Heap = [0] * (self.maxsize + 1)
+        self.Heap[0] = sys.maxsize
+        self.FRONT = 1
+
+    def parent(self, index):
+        return index // 2
+    def leftChild(self, index):
+        return 2 * index
+    def rightChild(self, index):
+        return (2 * index) + 1
+
+    def isLeaf(self, index):
+        if index >= (self.currsize//2) and index <= self.currsize:
+            return True
+        return False
+
+    def swap(self, index1, index2):
+        self.Heap[index1], self.Heap[index2] = (self.Heap[index2], self.Heap[index1])
+
+    def maxHeapify(self, index):
+        if not self.isLeaf(index):
+            if (self.Heap[index] < self.Heap[self.leftChild(index)] or
+                self.Heap[index] < self.Heap[self.rightChild(index)]):
+                if (self.Heap[self.leftChild(index)] > self.Heap[self.rightChild(index)]):
+                    self.swap(index, self.leftChild(index))
+                    self.maxHeapify(self.leftChild(index))
+                else:
+                    self.swap(index, self.rightChild(index))
+                    self.maxHeapify(self.rightChild(index))
+
+    def insertNode(self, element):
+        
+        if self.currsize >= self.maxsize:
+            return
+        self.currsize += 1
+        self.Heap[self.currsize] = element
+
+        current = self.currsize
+
+        while (self.Heap[current] >
+            self.Heap[self.parent(current)]):
+            self.swap(current, self.parent(current))
+            current = self.parent(current)
+
+    def Print(self):
+        
+        for index in range(1, (self.currsize // 2) + 1):
+            print(" PARENT NODE : " + str(self.Heap[index]) +
+                " LEFT CHILD : " + str(self.Heap[2 * index]) +
+                " RIGHT CHILD : " + str(self.Heap[2 * index + 1]))
+
+    def extractMaximum(self):
+
+        popped = self.Heap[self.FRONT]
+        self.Heap[self.FRONT] = self.Heap[self.currsize]
+        self.currsize -= 1
+        self.maxHeapify(self.FRONT)
+        
+        return popped
