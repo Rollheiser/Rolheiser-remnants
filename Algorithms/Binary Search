@@ -1,1 +1,35 @@
+# Iterative code
+def BinarySearch(array, target):
+    low = 0
+    high = len(list) - 1
 
+    while low <= high:
+        mid = (low + high) // 2
+
+        if array[mid] == target:
+            # If index is found, prints a message saying at what index it is
+            print(f"{target} is at {mid}")
+            return True
+        else:
+            if array[mid] < target:
+                low = mid+1
+            else:
+                high = mid-1
+
+    # Else, if index is not in the array, prints -1            
+    return print(-1)
+
+# Recursive code
+def BinarySearch(arr, target):
+    mid = len(arr) // 2
+    
+    if len(arr) == 1:
+        return mid if arr[mid] == target else None
+    elif arr[mid] == target:
+        return mid
+    else:
+        if arr[mid] < target:
+            callback_response = BinarySearch((arr[mid:]), target)
+            return mid + callback_response if callback_response is not None else None
+        else:
+            return BinarySearch((arr[:mid]), target)
