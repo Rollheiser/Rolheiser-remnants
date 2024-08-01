@@ -26,7 +26,7 @@ def BinarySearch(arr, target):
     if len(arr) == 1:
         return mid if arr[mid] == target else None
     elif arr[mid] == target:
-        return mid
+        return f"{target} is at index {mid}"
     else:
         if arr[mid] < target:
             callback_response = BinarySearch((arr[mid:]), target)
