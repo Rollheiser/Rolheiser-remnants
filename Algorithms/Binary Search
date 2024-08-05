@@ -10,11 +10,10 @@ def BinarySearch(array, target):
             # If index is found, prints a message saying at what index it is
             print(f"{target} is at {mid}")
             return True
+        elif array[mid] < target:
+            low = mid+1
         else:
-            if array[mid] < target:
-                low = mid+1
-            else:
-                high = mid-1
+            high = mid-1
 
     # Else, if index is not in the array, prints -1            
     return print(-1)
