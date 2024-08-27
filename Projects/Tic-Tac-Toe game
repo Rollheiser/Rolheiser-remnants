@@ -103,16 +103,16 @@ current_players = players()
 
 print("Welcome to the \"tic tac toe game\"")
 print("Which player do you want to be?")
-print("Type \"yes\" to select one (press \"enter\" if you don't want whichever option)")
+print("Type \"yes\" to select one (type \"no\" if you don't want whichever option)")
 
 while True:
     player1 = input("\nPlayer 1 (X) = ")
-    player2 = input("Player 2 (O) = ")
-
     if player1 == "yes":
         print("You will be \"X\"")
         break
-    elif player2 == "yes":
+
+    player2 = input("Player 2 (O) = ")
+    if player2 == "yes":
         print("You will be \"O\"")
         break
     else:
