@@ -1,7 +1,7 @@
 # Iterative code
 def BinarySearch(array, target):
     low = 0
-    high = len(list) - 1
+    high = len(array) 
 
     while low <= high:
         mid = (low + high) // 2
