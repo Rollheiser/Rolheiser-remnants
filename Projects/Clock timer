@@ -1,0 +1,47 @@
+import time as t
+import winsound
+
+def make_sound():
+    for _ in range(5):
+        winsound.Beep(2500,500)
+
+def is_correct():
+    valid_answers = ["yes", "no"]
+    answer = input("")
+    while answer.lower() not in valid_answers:
+        print("\nInvalid answer, type \"yes\" or \"no\"")
+        answer = input("")
+
+    if answer == "yes":
+        return True
+    else:
+        return False
+#---------------------------------------------------------------
+print("Welcome to the timer!\nPlease type the hour and minute you want the timer to go off at")
+print("Please be aware that the timer is in 24-hour format (0-23)")
+while True:
+    try:
+        hour = str(input("\nType the hour (0-23): "))
+        minute = str(input("Type the minute (0-59): "))
+        assert 0 <= int(hour) < 24 and 0 <= int(minute) < 60
+
+        print(f"\nThe timer is at {hour}:{minute}, correct? (type yes or no)")
+        if is_correct():
+            break
+        else:
+            continue
+    except ValueError:
+        print("\nInvalid input. Please enter numeric values for hour and minute")
+    except AssertionError:
+        print("\nHour and/or minute is/are not valid. Please enter a valid hour and/or minute")
+
+Timer = f"{hour.zfill(2)}:{minute.zfill(2)}"
+
+while True:
+    CurrentTime = t.strftime("%H:%M", t.localtime())
+    if CurrentTime == Timer:
+        break
+    t.sleep(1)
+
+print("\nTime is up!")
+make_sound()
