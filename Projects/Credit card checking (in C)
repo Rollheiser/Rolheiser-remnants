@@ -1,0 +1,118 @@
+#include <cs50.h>
+#include <stdio.h>
+
+// The functions that will be used
+int nums_1(long number_card);
+int nums_2(long number_card);
+void check_card(long number_card);
+
+int main(void)
+{
+    // asks for the number of the card, and it doesn't continue if the answer it's not valid
+    long credit_card = get_long("Number: ");
+
+    check_card(credit_card);
+}
+
+// nums_1 stands for the second-to-last digits to be multiplied by 2
+int nums_1(long number_card)
+{
+    int position = 0;
+    int sum = 0;
+
+    do
+    {
+        // gets the second-to-last digits
+        int n = number_card % 10;
+        number_card /= 10;
+        position++;
+
+        n *= 2;
+        // if the number is greater than 9 (or has two digits), the number is halved
+        if (position % 2 == 0 && n > 9)
+        {
+            int m = n / 10;
+            n %= 10;
+
+            sum = sum + m + n;
+        }
+        // if the number passes the criteria, then is added to the variable "sum"
+        else if (position % 2 == 0)
+        {
+            sum += n;
+        }
+    }
+    while (number_card > 0);
+    return sum;
+}
+
+// nums_2 stands for the last digits of each iteration
+int nums_2(long number_card)
+{
+    int skip = 0;
+    int sum = 0;
+
+    do
+    {
+        // in this section I don't use the variable "position" as before,
+        // because it's a different process
+        int n = number_card % 10;
+        number_card /= 10;
+
+        if (!skip)
+        {
+            sum += n;
+        }
+        skip = !skip;
+    }
+    while (number_card > 0);
+    return sum;
+}
+
+// checks the length and first two digits of the card, also checks whether it's valid or not
+void check_card(long number_card)
+{
+    int total_sum = nums_1(number_card) + nums_2(number_card);
+    int length = 0;
+    int first_digit = 0;
+    int first_two_digits = 0;
+    long temp = number_card;
+
+    while (temp > 0)
+    {
+        if (temp < 10)
+        {
+            first_digit = temp;
+        }
+        if (temp >= 10 && temp < 100)
+        {
+            first_two_digits = temp;
+        }
+        temp /= 10;
+        length++;
+    }
+    // checks for the last digit of the total sum, and then the first two digits and length
+    if ((total_sum % 10) == 0)
+    {
+        if (length == 15 && (first_two_digits == 34 || first_two_digits == 37))
+        {
+            printf("AMEX\n");
+        }
+        else if (length == 16 && (first_two_digits >= 51 && first_two_digits <= 55))
+        {
+            printf("MASTERCARD\n");
+        }
+        else if ((length == 13 || length == 16) && first_digit == 4)
+        {
+            printf("VISA\n");
+        }
+        else
+        {
+            printf("INVALID\n");
+        }
+    }
+    else
+    {
+        printf("INVALID\n");
+    }
+}
