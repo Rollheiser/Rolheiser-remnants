@@ -1,0 +1,63 @@
+#include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Iniatilizes the main function to receive two arguments
+int main(int argc, string argv[])
+{
+    // Checks if the arguments are valid or not
+    if (argc != 2)
+    {
+        printf("Usage: ./substitution key\n");
+        return 1;
+    }
+    else if (strlen(argv[1]) != 26)
+    {
+        printf("Key must contain 26 characters.\n");
+        return 1;
+    }
+
+    for (int i = 0, len = strlen(argv[1]); i < len; i++)
+    {
+        // Checks if the key contains alphabetic characters,
+        if (isalpha(argv[1][i]) == false)
+        {
+            printf("Key must only contain alphabetic characters.\n");
+            return 1;
+        }
+
+        // or any character is repeated
+        for (int j = i + 1, len2 = strlen(argv[1]); j < len2; j++)
+        {
+            if (toupper(argv[1][i]) == toupper(argv[1][j]))
+            {
+                printf("Key must not contain repeated characters.\n");
+                return 1;
+            }
+        }
+    }
+
+    string plain_text = get_string("plaintext:  ");
+
+    printf("ciphertext: ");
+
+    // Starts to encipher the text and then print each character
+    for (int i = 0, len = strlen(plain_text); i < len; i++)
+    {
+        if (plain_text[i] >= 'A' && plain_text[i] <= 'Z')
+        {
+            printf("%c", (toupper(argv[1][plain_text[i] - 65])));
+        }
+        else if (plain_text[i] >= 'a' && plain_text[i] <= 'z')
+        {
+            printf("%c", (tolower(argv[1][plain_text[i] - 97])));
+        }
+        else if (isalpha(plain_text[i]) == false)
+        {
+            printf("%c", plain_text[i]);
+        }
+    }
+    printf("\n");
+}
