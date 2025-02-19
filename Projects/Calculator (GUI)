@@ -1,0 +1,83 @@
+import tkinter as tk
+
+# Creation of the root and the text screen of the calculator
+root = tk.Tk()
+root.geometry("232x310")
+root.title("Calculator")
+
+text_screen = tk.Text(root, height=2, width=14, font=("Arial", 24))
+text_screen.grid(columnspan=4)
+calculation_screen = ""
+
+# Define the methods to use
+def add_in_calculation(symbol):
+    global calculation_screen
+    calculation_screen += str(symbol) 
+    text_screen.delete(1.0, "end") 
+    text_screen.insert(1.0, calculation_screen) # To insert the new text into the screen
+
+def evaluate_calculation():
+    global calculation_screen
+    try:
+        calculation_screen = str(eval(calculation_screen))
+        text_screen.delete(1.0, "end")
+        text_screen.insert(1.0, calculation_screen)
+    except:                               # In case the user makes a type error, or does a math error
+        clear_field()
+        text_screen.insert(1.0, "Error")
+
+def update(text): # This function is to update and keep track of the current text
+    text_screen.delete(1.0, "end") 
+    text_screen.insert("insert", text) 
+    text_screen.grid()
+
+def delete():       # Deletes the last input, in case of a typo
+    global calculation_screen
+    text = text_screen.get(1.0, "end")
+    text = text[:-2]
+    calculation_screen = text  
+    update(text)
+
+def clear_field():
+    global calculation_screen
+    calculation_screen = ""
+    text_screen.delete(1.0, "end")
+
+def create_buttons(buttonframe):
+    buttons = [
+        ("1", 0, 0), ("2", 0, 1), ("3", 0, 2), ("+", 0, 3),
+        ("4", 1, 0), ("5", 1, 1), ("6", 1, 2), ("-", 1, 3),
+        ("7", 2, 0), ("8", 2, 1), ("9", 2, 2), ("*", 2, 3),
+        ("(", 3, 0), ("0", 3, 1), (")", 3, 2), ("/", 3, 3),
+        ("=", 4, 0), ("DEL", 4, 2), ("C", 4, 3)
+    ]
+
+    for text, row, col in buttons:
+        if text == "=":
+            btn = tk.Button(buttonframe, text=text, command=evaluate_calculation, font=("Arial", 18))
+            btn.grid(row=row, column=col, rowspan=1, columnspan=2, sticky="news")
+            continue
+
+        elif text == "C":
+            btn = tk.Button(buttonframe, text=text, command=clear_field, font=("Arial", 18))
+
+        elif text == "DEL":
+            btn = tk.Button(buttonframe, text=text, command=delete, width=2, font=("Arial", 18))
+
+        else:
+            btn = tk.Button(buttonframe, text=text, command=lambda t=text: add_in_calculation(t), font=("Arial", 18))
+
+        btn.grid(row=row, column=col, sticky="news")
+
+    for i in range(5):
+        buttonframe.columnconfigure(i, weight=1)
+        buttonframe.rowconfigure(i, weight=1)
+
+buttonframe = tk.Frame(root)
+buttonframe.grid(row=1, column=0, columnspan=4, sticky="news")
+buttonframe.rowconfigure(4, weight=1)         # To extend the "equal" button
+buttonframe.columnconfigure(0, weight=1)
+
+create_buttons(buttonframe)
+
+root.mainloop()
