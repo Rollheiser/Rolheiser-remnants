@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class ConversionTiempo
+{
+  public static void main(String[] args)
+  {
+    int horasAntes, minutosAntes, segundosAntes;
+    int minutosRestantes, segundosRestantes;
+    int horasActual, minutosActual, segundosActual;
+    Scanner sc = new Scanner(System.in);
+
+    horasAntes = sc.nextInt();
+    minutosAntes = sc.nextInt();
+    segundosAntes = sc.nextInt();
+
+    segundosActual = (int) (segundosAntes / 60);
+    segundosRestantes = (int) (segundosAntes % 60);
+
+    minutosActual = (int) ((minutosAntes % 60) + segundosActual);
+    minutosRestantes = (int) (minutosAntes % 60);
+ 
+    horasActual = (horasAntes + (int) (minutosAntes / 60));
+
+    System.out.printf("%d %d %d", horasActual, minutosActual, segundosRestantes);
+  }
+}
