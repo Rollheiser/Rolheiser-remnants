@@ -12,10 +12,10 @@ def is_correct():
         print("\nInvalid answer, type \"yes\" or \"no\"")
         answer = input("")
 
-    if answer == "yes":
-        return True
-    else:
+    if answer == "no":
         return False
+
+    return True
 #---------------------------------------------------------------
 print("Welcome to the timer!\nPlease type the hour and minute you want the timer to go off at")
 print("Please be aware that the timer is in 24-hour format (0-23)")
