@@ -27,15 +27,13 @@ class LinkedList:
 linkedlist = LinkedList()
 solar_system = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"] 
 planets = 8
-actual_planets = 0
 
 print("In this \"program\" you need to enter the planets of the solar system in order")
 print("then the computer will tell you if you're right or wrong\n")
-while actual_planets < planets:
-        for i in range(1, 9):
-                planet_written = input(f"Enter the planet #{i}: ").lower()
-                linkedlist.insert(planet_written)
-                actual_planets += 1
+
+for i in range(1, 9):
+    planet_written = input(f"Enter the planet #{i}: ").lower()
+    linkedlist.insert(planet_written)
 
 print("\nYour input:")
 print(linkedlist.printout())
