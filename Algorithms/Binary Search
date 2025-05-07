@@ -9,14 +9,14 @@ def BinarySearch(array, target):
         if array[mid] == target:
             # If index is found, prints a message saying at what index it is
             print(f"{target} is at {mid}")
-            return True
+            return
         elif array[mid] < target:
-            low = mid+1
+            low = mid + 1
         else:
-            high = mid-1
+            high = mid - 1
 
-    # Else, if index is not in the array, prints -1            
-    return print(-1)
+    # Else, if index is not in the array, returns -1            
+    return -1
 
 # Recursive code
 def BinarySearch(arr, target):
