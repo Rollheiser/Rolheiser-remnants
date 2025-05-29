@@ -1,0 +1,62 @@
+package tecnoplus;
+import java.util.Scanner;
+
+public class TecnoPlus {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Bienvenido al sistema de inventario de TecnoPlus.");
+        System.out.println("Este sistema sirve para interactuar con el inventario y realizar operaciones logísticas.");
+        System.out.println("En este, puedes: ");
+        System.out.println("- Registrar nuevos productos en el inventario.");
+        System.out.println("- Vender productos.");
+        System.out.println("- Reabastecer el inventario cuando sea necesario.");
+        System.out.println("- Generar informes tanto de las ventas realizadas como del inventario actual.");
+        
+        while(true){
+            System.out.println("¿Desea realizar una operación? (Escriba si o no");
+            sc.nextLine();
+            String respuesta = sc.nextLine();
+            
+            if(respuesta.toLowerCase().equals("si")){
+                break;
+            }
+            else if(respuesta.toLowerCase().equals("no")){
+                return;
+            }
+            else{
+                System.out.println("Error: Introduce una respuesta válida.");
+            }
+        }
+        
+        int numeroOperacion;
+        while(true){
+            System.out.println("Perfecto. A continuación se muestran las posibles opciones: ");
+            System.out.println("1.- Registrar nuevos productos en el inventario.");
+            System.out.println("2.- Vender productos.");
+            System.out.println("3.- Reabastecer el inventario.");
+            System.out.println("4.- Generar informe del inventario actual.");
+            System.out.println("5.- Generar informe de las ventas realizadas.");
+            System.out.println();
+            System.out.println("Para realizar una operación, escriba el número asignado a la operación.");
+            System.out.println("Ejemplo: \"1\", la operación sería registrar nuevo producto.");
+            
+            while(true){
+                System.out.print("Operación: ");
+
+                numeroOperacion = sc.nextInt();
+
+                if (numeroOperacion < 1 || numeroOperacion > 5) {
+                    System.out.println("Por favor introduzca un número entre 1 y 5.");
+                } else {
+                    break;
+                }
+            }
+            
+            switch(numeroOperacion){
+                case 1:
+                    
+            }
+        }
+    }
+}
