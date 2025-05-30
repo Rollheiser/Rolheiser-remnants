@@ -1,5 +1,6 @@
 package tecnoplus;
 import java.util.Scanner;
+// Solamente es para añadir la fecha actual a los informes, para nada más.
 import java.time.LocalDate;
 
 public class Inventario {
@@ -57,13 +58,13 @@ public class Inventario {
     }
     
     public static void registrarDispositivosInventario(Dispositivo[] dispositivos){
-        // iterar sobre el conjunto de dispositivos
+        // iterar sobre el conjunto de dispositivos.
 
         for(int i = 0; i < dispositivos.length; i++){
             boolean existe = false;
             Dispositivo dispositivoActual = dispositivos[i];
 
-            // iterar sobre el inventario para verificar existencias
+            // iterar sobre el inventario para verificar existencias.
             for(int j = 0; j < cantidadDispositivosInventario; j++){
                 if(dispositivoActual.nombreDispositivo.toLowerCase().equals(inventario[j].nombreDispositivo.toLowerCase())){
                     inventario[j].unidadesDisponibles += dispositivoActual.unidadesDisponibles;
@@ -72,7 +73,7 @@ public class Inventario {
                 }
             }
             
-            // Si no hay existencias de ese prod., se introduce como nuevo
+            // Si no hay existencias de ese prod., se introduce como nuevo.
             if(!existe){
                 inventario[cantidadDispositivosInventario] = dispositivoActual;
                 cantidadDispositivosInventario++;
@@ -228,6 +229,7 @@ public class Inventario {
     
     // --------------------------------Imprimir informes e inventario-----------------------------------------------------------------
     public static void imprimirInformeInventario(){
+        System.out.printf("Fecha del informe: %s%n", fechaActual);
         int contadorTotalProductos = 0;
         
         System.out.printf("%-25s %-20s %-22s %-15s%n", "Nombre del producto", "Código del producto", "Unidades disponibles", "Umbral mínimo");
@@ -257,7 +259,6 @@ public class Inventario {
                 System.out.printf("¡Advertencia! El producto \"%s\" posee %d unidades menores o iguales al umbral mínimo", dispositivo.nombreDispositivo, dispositivo.unidadesDisponibles);
             }
         }
-        System.out.println();
     }
     
     public static void imprimirInformeVenta(){
