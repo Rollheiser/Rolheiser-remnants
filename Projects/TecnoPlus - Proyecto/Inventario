@@ -130,7 +130,9 @@ public class Inventario {
             }
         }
         
+        // Aquí vamos a ordenar las ventas de mayor a menor.
         for(int i = 0; i < cantidadVentas; i++){
+            int indiceIntercambio = 0;
             boolean vaACambiar = false;
             Venta ventaMayor = ventasTotales[i];
             
@@ -138,11 +140,16 @@ public class Inventario {
                 if(ventaMayor.gananciaTotal < ventasTotales[j].gananciaTotal){
                     ventaMayor = ventasTotales[j];
                     vaACambiar = true;
+                    // Vamos guardando el índice para poder cambiar las ventas de lugar.
+                    indiceIntercambio = j;
                 }
             }
             
+            // Controlamos el intercambio de ventas con una variable booleana.
             if(vaACambiar){
+                Venta temp = ventasTotales[i];
                 ventasTotales[i] = ventaMayor;
+                ventasTotales[indiceIntercambio] = temp;
             }
         }
 
