@@ -1,10 +1,13 @@
 package tecnoplus;
 import java.util.Scanner;
+import java.lang.*;
 
 public class TecnoPlus {
+    static Scanner sc = new Scanner(System.in);
+    static boolean esValido;
+    static int cantidadProductos;
+    
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
         System.out.println("Bienvenido al sistema de inventario de TecnoPlus.");
         System.out.println("Este sistema sirve para interactuar con el inventario y realizar operaciones logísticas.");
         System.out.println("En este, puedes: ");
@@ -37,6 +40,7 @@ public class TecnoPlus {
             System.out.println("3.- Reabastecer el inventario.");
             System.out.println("4.- Generar informe del inventario actual.");
             System.out.println("5.- Generar informe de las ventas realizadas.");
+            System.out.println("6.- Mostrar el inventario completo a detalle.");
             System.out.println();
             System.out.println("Para realizar una operación, escriba el número asignado a la operación.");
             System.out.println("Ejemplo: \"1\", la operación sería registrar nuevo producto.");
@@ -46,17 +50,107 @@ public class TecnoPlus {
 
                 numeroOperacion = sc.nextInt();
 
-                if (numeroOperacion < 1 || numeroOperacion > 5) {
-                    System.out.println("Por favor introduzca un número entre 1 y 5.");
+                if (numeroOperacion < 1 || numeroOperacion > 6) {
+                    System.out.println("Por favor introduzca un número entre 1 y 6.");
                 } else {
                     break;
                 }
             }
             
+            System.out.println();
             switch(numeroOperacion){
                 case 1:
-                    
+                    recibirNuevosProductos();
+                    break;
+                case 2:
+                    venderProductos();
+                    break;
+                case 3:
+                    reabastecerInventarioTecnoPlus();
+                    break;
+                case 4:
+                    Inventario.imprimirInformeInventario();
+                    break;
+                case 5:
+                    Inventario.imprimirInformeVenta();
+                    break;
+                case 6:
+                    Inventario.imprimirListadoInventario();
+                    break;
+            }
+            
+            while(true){
+                System.out.println("¿Desea realizar otra operación? (Escriba \"si\" para proceder, o \"no\" para parar).");
+                sc.nextLine();
+                String respuesta = sc.nextLine();
+                
+                if(respuesta.toLowerCase().equals("si")){
+                    break;
+                }
+                else if(respuesta.toLowerCase().equals("no")){
+                    System.exit(0);
+                }
+                else{
+                    System.out.println("Error: Introduzca una respuesta válida.");
+                }
             }
         }
+    }
+    
+    public static void recibirNuevosProductos(){
+        do{  
+           System.out.println("¿Cuántos productos desea registrar?");
+           cantidadProductos = sc.nextInt();
+            
+           esValido = verificarEsValido(cantidadProductos);
+           
+           if(!esValido){
+               System.out.println("Error: Introduzca una cantidad mayor a 0.");
+           }
+        } 
+        while(!esValido);
+        
+        Dispositivo[] dispositivosActuales = Inventario.recibirDispositivos(cantidadProductos);
+        Inventario.registrarDispositivosInventario(dispositivosActuales);
+    }
+    
+    public static void venderProductos(){
+        do{
+            System.out.println("¿Cuántos productos desea vender?");
+            cantidadProductos = sc.nextInt();
+            
+            esValido = verificarEsValido(cantidadProductos);
+            
+            if(!esValido){
+                System.out.println("Error: Introduzca una cantidad mayor a 0.");
+            }
+        }
+        while(!esValido);
+        
+        Inventario.ventaDeDispositivo(cantidadProductos);
+    }
+    
+    public static void reabastecerInventarioTecnoPlus(){
+        do{
+            System.out.println("¿Cuántos productos desea reabastecer?");
+            cantidadProductos = sc.nextInt();
+            
+            esValido = verificarEsValido(cantidadProductos);
+            
+            if(!esValido){
+                System.out.println("Error: Introduzca una cantidad mayor a 0.");
+            }
+        }
+        while(!esValido);
+        
+        Inventario.reabastecerInventario(cantidadProductos);
+    }
+    
+    public static boolean verificarEsValido(int numero){
+        if(numero <= 0){
+            return false;
+        }
+        
+        return true;
     }
 }
