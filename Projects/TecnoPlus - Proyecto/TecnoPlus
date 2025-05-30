@@ -1,6 +1,5 @@
 package tecnoplus;
 import java.util.Scanner;
-import java.lang.*;
 
 public class TecnoPlus {
     static Scanner sc = new Scanner(System.in);
@@ -10,17 +9,19 @@ public class TecnoPlus {
     public static void main(String[] args) {
         System.out.println("Bienvenido al sistema de inventario de TecnoPlus.");
         System.out.println("Este sistema sirve para interactuar con el inventario y realizar operaciones logísticas.");
+        System.out.println();
         System.out.println("En este, puedes: ");
         System.out.println("- Registrar nuevos productos en el inventario.");
         System.out.println("- Vender productos.");
         System.out.println("- Reabastecer el inventario cuando sea necesario.");
         System.out.println("- Generar informes tanto de las ventas realizadas como del inventario actual.");
+        System.out.println();
         
         while(true){
-            System.out.println("¿Desea realizar una operación? (Escriba si o no");
-            sc.nextLine();
+            System.out.println("¿Desea realizar una operación? (Escriba si o no)");
             String respuesta = sc.nextLine();
             
+            // Recibimos la entrada y verificamos si continúamos o no.
             if(respuesta.toLowerCase().equals("si")){
                 break;
             }
@@ -34,6 +35,7 @@ public class TecnoPlus {
         
         int numeroOperacion;
         while(true){
+            System.out.println();
             System.out.println("Perfecto. A continuación se muestran las posibles opciones: ");
             System.out.println("1.- Registrar nuevos productos en el inventario.");
             System.out.println("2.- Vender productos.");
@@ -43,7 +45,8 @@ public class TecnoPlus {
             System.out.println("6.- Mostrar el inventario completo a detalle.");
             System.out.println();
             System.out.println("Para realizar una operación, escriba el número asignado a la operación.");
-            System.out.println("Ejemplo: \"1\", la operación sería registrar nuevo producto.");
+            System.out.println("Ejemplo: 1, la operación sería registrar nuevo producto.");
+            System.out.println();
             
             while(true){
                 System.out.print("Operación: ");
@@ -79,24 +82,31 @@ public class TecnoPlus {
                     break;
             }
             
+            System.out.println();
+            sc.nextLine();
+            
+            // Uso bucles while(true) para repetir el bloque de código hasta
+            // recibir una entrada válida.
             while(true){
                 System.out.println("¿Desea realizar otra operación? (Escriba \"si\" para proceder, o \"no\" para parar).");
-                sc.nextLine();
                 String respuesta = sc.nextLine();
                 
                 if(respuesta.toLowerCase().equals("si")){
                     break;
                 }
                 else if(respuesta.toLowerCase().equals("no")){
-                    System.exit(0);
+                    return;
                 }
                 else{
                     System.out.println("Error: Introduzca una respuesta válida.");
+                    System.out.println();
                 }
             }
         }
     }
     
+    // De aquí para abajo están los métodos de cada operación,
+    // para mayor eficiencia y poder ser reutilizados cuando sea necesario.
     public static void recibirNuevosProductos(){
         do{  
            System.out.println("¿Cuántos productos desea registrar?");
@@ -146,6 +156,7 @@ public class TecnoPlus {
         Inventario.reabastecerInventario(cantidadProductos);
     }
     
+    // Un método extra para validar la entrada.
     public static boolean verificarEsValido(int numero){
         if(numero <= 0){
             return false;
