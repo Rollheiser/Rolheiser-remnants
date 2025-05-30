@@ -17,10 +17,7 @@ public class Inventario {
         String nombreDispositivo, categoria, codigo;
         float precio, IVA;
         int unidadesDispositivo, umbralMinimo;
-        
-        System.out.println("¿Cuántos dispositivos desea registrar?");
-        cantidad = sc.nextInt();
-        
+
         Dispositivo[] dispositivos = new Dispositivo[cantidad];
         System.out.println();
         
@@ -86,10 +83,7 @@ public class Inventario {
     public static void reabastecerInventario(int cantidadProd){
         int unidadesReabastecer;
         String nombreProd;
-        
-        System.out.println("¿Cuántos productos vas a reabastecer?");
-        cantidadProd = sc.nextInt();
-            
+
         for (int i = 0; i < cantidadProd; i++) {
             boolean prodEncontrado = false;
 
@@ -135,6 +129,22 @@ public class Inventario {
                 break;
             }
         }
+        
+        for(int i = 0; i < cantidadVentas; i++){
+            boolean vaACambiar = false;
+            Venta ventaMayor = ventasTotales[i];
+            
+            for(int j = i + 1; j < cantidadVentas; j++){
+                if(ventaMayor.gananciaTotal < ventasTotales[j].gananciaTotal){
+                    ventaMayor = ventasTotales[j];
+                    vaACambiar = true;
+                }
+            }
+            
+            if(vaACambiar){
+                ventasTotales[i] = ventaMayor;
+            }
+        }
 
         // si no es así, se hace el registro normal
         if (!ventaProdExiste) {
@@ -149,9 +159,6 @@ public class Inventario {
         // Para mantener el registro del costo total de la venta
         float costoVenta, costoTotal = 0;
 
-        System.out.println("¿Cuántos productos vas a vender?");
-        cantidadProductos = sc.nextInt();
-        sc.nextLine();
         System.out.println();
 
         for (int i = 0; i < cantidadProductos; i++) {
@@ -247,7 +254,9 @@ public class Inventario {
     }
     
     public static void imprimirInformeVenta(){
-        System.out.printf("Fecha actual: %s%n", fechaActual);
+        // Añado la fecha en la que fue generado el informe,
+        // para mayor orden o facilitar la búsqueda.
+        System.out.printf("Fecha del informe: %s%n", fechaActual);
         System.out.printf("%-26s %-30s%n", "Nombre del producto", "Ganancias totales del producto");
         System.out.println("---------------------------------------------------------");
         
@@ -264,7 +273,9 @@ public class Inventario {
     }
     
     public static void imprimirListadoInventario(){
-        // Imprime el encabezado del listado, para que sea más claro
+        System.out.printf("Fecha del informe: %s%n", fechaActual);
+        
+        // Imprime el encabezado del listado, para que sea más claro.
         System.out.printf("%-20s %-15s %-12s %-10s %-12s %-10s %-10s%n",
                         "Nombre", "Categoría", "Precio", "IVA (%)", "Código", "Unidades", "Umbral");
 
