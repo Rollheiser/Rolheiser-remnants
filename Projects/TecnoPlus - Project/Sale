@@ -1,0 +1,11 @@
+package tecnoplus;
+public class Sale {
+    // A sale class to better record the total sales
+    String productName;
+    float totalProfit;
+    
+    public Sale(String productName, float totalProfit) {
+        this.productName = productName;
+        this.totalProfit = totalProfit;
+    }
+}
