@@ -1,0 +1,304 @@
+package tecnoplus;
+import java.util.Scanner;
+import java.time.LocalDate;
+
+public class Inventory {
+    // totalSales is array because we are going to store more than one sale
+    static Device[] inventory = new Device[100];
+    static Sale[] totalSales = new Sale[100];
+    static LocalDate currentDate = LocalDate.now();
+    static int inventoryDeviceQuantity = 0, salesQuantity = 0;
+    static Scanner sc = new Scanner(System.in);
+    
+    
+    // -----------------------------Related to product introduction and registration--------------------------------------------------
+    // will return an array because they introduce several devices
+    public static Device[] receiveDevices(int quantity){
+        String deviceName, category, code;
+        float price, VAT;
+        int deviceUnits, minimumThreshold;
+
+        Device[] devices = new Device[quantity];
+        System.out.println();
+        
+        for(int i = 0; i < quantity; i++){
+            System.out.println("Product #" + (i + 1));
+            
+            System.out.println("Enter the device name: ");
+            sc.nextLine();
+            deviceName = sc.nextLine();
+            System.out.println("Enter its category: ");
+            category = sc.nextLine();
+            System.out.println("Enter the price of this device: ");
+            price = sc.nextInt();
+            System.out.println("Enter the VAT percentage of the device: ");
+            VAT = sc.nextFloat();
+            System.out.println("Enter the device code: ");
+            sc.nextLine();
+            code = sc.nextLine();
+            System.out.println("Enter the device units: ");
+            deviceUnits = sc.nextInt();
+            
+            if(deviceUnits <= 0 || VAT < 0 || price <= 0){
+                System.out.println("Error: You cannot enter negative quantities or equal to zero.");
+                quantity--;
+                i--;
+                continue;
+            }
+            
+            System.out.println("Enter the minimum threshold to restock the product: ");
+            minimumThreshold = sc.nextInt();
+            
+            devices[i] = new Device(deviceName, category, price, VAT, code, deviceUnits, minimumThreshold);
+            System.out.println();
+        }
+        
+        return devices;
+    }
+    
+    public static void registerDevicesInventory(Device[] devices){
+        // iterate over the set of devices.
+
+        for(int i = 0; i < devices.length; i++){
+            boolean exists = false;
+            Device currentDevice = devices[i];
+
+            // iterate over the inventory to verify existence.
+            for(int j = 0; j < inventoryDeviceQuantity; j++){
+                if(currentDevice.deviceName.toLowerCase().equals(inventory[j].deviceName.toLowerCase())){
+                    inventory[j].availableUnits += currentDevice.availableUnits;
+                    exists = true;
+                    break;
+                }
+            }
+            
+            // If there is no stock of that product, it is introduced as new.
+            if(!exists){
+                inventory[inventoryDeviceQuantity] = currentDevice;
+                inventoryDeviceQuantity++;
+            }
+        }
+    }
+    
+    public static void restockInventory(int productQuantity){
+        int unitsToRestock;
+        String productName;
+
+        for (int i = 0; i < productQuantity; i++) {
+            boolean productFound = false;
+
+            System.out.println("What product are you going to restock?");
+            sc.nextLine();
+            productName = sc.nextLine();
+ 
+            System.out.println("How many units are you going to add?");
+            unitsToRestock = sc.nextInt();
+            
+            if(unitsToRestock <= 0){
+                System.out.println("Error: You cannot enter negative quantities or equal to zero.");
+                continue;
+            }
+
+            // We iterate over the array to find the product, if we find it,
+            // we add the units
+            for (int j = 0; j < inventoryDeviceQuantity; j++) {
+                if (productName.toLowerCase().equals(inventory[j].deviceName.toLowerCase())) {
+                    inventory[j].availableUnits += unitsToRestock;
+                    productFound = true;
+                    break;
+                }
+            }
+            
+            // If not found in inventory, we print a message
+            if (!productFound) {
+                System.out.println("Error: Product not found.");
+            }
+        }
+    }
+    
+    //---------------------------------Related to sales and their registration-------------------------------------------------
+    public static void saleRegistration(String deviceName, float saleCost) {
+        // Boolean to verify if the same product has been sold previously
+        boolean productSaleExists = false;
+        Sale newSale = new Sale(deviceName, saleCost);
+
+        for (int i = 0; i < salesQuantity; i++) {
+            if (newSale.productName.toLowerCase().equals(totalSales[i].productName)) {
+                totalSales[i].totalProfit += newSale.totalProfit;
+                productSaleExists = true;
+                break;
+            }
+        }
+        
+        // Here we are going to sort the sales from highest to lowest.
+        for(int i = 0; i < salesQuantity; i++){
+            int exchangeIndex = 0;
+            boolean willChange = false;
+            Sale highestSale = totalSales[i];
+            
+            for(int j = i + 1; j < salesQuantity; j++){
+                if(highestSale.totalProfit < totalSales[j].totalProfit){
+                    highestSale = totalSales[j];
+                    willChange = true;
+                    // We keep saving the index to be able to change the sales position.
+                    exchangeIndex = j;
+                }
+            }
+            
+            // We control the exchange of sales with a boolean variable.
+            if(willChange){
+                Sale temp = totalSales[i];
+                totalSales[i] = highestSale;
+                totalSales[exchangeIndex] = temp;
+            }
+        }
+
+        // if not, normal registration is made
+        if (!productSaleExists) {
+            totalSales[salesQuantity] = newSale;
+            salesQuantity++;
+        }
+    }
+
+    public static void sellDevice(int productQuantity) {
+        String deviceName;
+        int unitsToBuy;
+        // To keep track of the total cost of the sale
+        float saleCost, totalCost = 0;
+
+        System.out.println();
+
+        for (int i = 0; i < productQuantity; i++) {
+            // Error message printing can be better controlled
+            boolean deviceFound = false, isAvailable = true;
+            
+            System.out.println("Product #" + (i + 1));
+
+            System.out.println("Enter the product name: ");
+            deviceName = sc.nextLine();
+            System.out.println("Enter the quantity of units to buy: ");
+            unitsToBuy = sc.nextInt();
+
+            if (unitsToBuy <= 0) {
+                System.out.println("Error: You cannot enter negative quantities or equal to zero.");
+                productQuantity--;
+                i--;
+                continue;
+            }
+            sc.nextLine();
+
+            for (int j = 0; j < inventoryDeviceQuantity; j++) {
+                // Iterate through inventory to search for the device.
+                if (deviceName.toLowerCase().equals(inventory[j].deviceName.toLowerCase())) {
+                    // If there are no available units, the sale cannot be made
+                    if ((inventory[j].availableUnits == 0) || (unitsToBuy > inventory[j].availableUnits)) {
+                        isAvailable = false;
+                        break;
+                    }
+
+                    inventory[j].availableUnits -= unitsToBuy;
+                    saleCost = ((inventory[j].salePrice * unitsToBuy) * ((100 + inventory[j].VATPercentage) / 100));
+                    totalCost += saleCost;
+
+                    saleRegistration(deviceName, saleCost);
+
+                    deviceFound = true;
+                    break;
+                }
+            }
+
+            // if not found, then it will print an invalid message
+            if (!deviceFound) {
+                System.out.println();
+                System.out.printf("Error: The product %s was not found or is not available.%n", deviceName);
+            }
+
+            // Same if it's not available
+            if (!isAvailable) {
+                System.out.println();
+                System.out.println("Error: There are no available units of the product, or the quantity requested exceeds current units");
+            }
+        }
+
+        if (salesQuantity > 0) {
+            System.out.println();
+            System.out.printf("The total cost of this purchase (VAT included) is: %.2f%n", totalCost);
+        }
+    }
+    
+    // --------------------------------Print reports and inventory-----------------------------------------------------------------
+    public static void printInventoryReport(){
+        System.out.printf("Report date: %s%n", currentDate);
+        int totalProductCounter = 0;
+        
+        System.out.printf("%-25s %-20s %-22s %-15s%n", "Product name", "Product code", "Available units", "Minimum threshold");
+        System.out.println("-----------------------------------------------------------------------------------");
+        
+        for(int i = 0; i < inventoryDeviceQuantity; i++){
+            Device device = inventory[i];
+            
+            System.out.printf("%-25s %-20s %-22d %-15d%n", device.deviceName, device.code, device.availableUnits, device.minimumThreshold);
+                
+            totalProductCounter += device.availableUnits;
+        }
+        
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.printf("Total quantity of products: %d", totalProductCounter);
+        System.out.println();
+        System.out.println();
+        
+        for(int i = 0; i < inventoryDeviceQuantity; i++){
+            Device device = inventory[i];
+            
+            if(device.availableUnits == 0){
+                System.out.printf("Warning! The product \"%s\" has 0 available units.", device.deviceName);
+            }
+            
+            else if(device.availableUnits <= device.minimumThreshold){
+                System.out.printf("Warning! The product \"%s\" has %d units less than or equal to the minimum threshold", device.deviceName, device.availableUnits);
+            }
+        }
+    }
+    
+    public static void printSalesReport(){
+        // I add the date when the report was generated,
+        // for better organization or to facilitate searching.
+        System.out.printf("Report date: %s%n", currentDate);
+        System.out.printf("%-26s %-30s%n", "Product name", "Total product profits");
+        System.out.println("---------------------------------------------------------");
+        
+        float totalReportProfit = 0;
+        for(int i = 0; i < salesQuantity; i++){
+            Sale sale = totalSales[i];
+            
+            totalReportProfit += sale.totalProfit;
+            System.out.printf("%-26s %-30.2f%n", sale.productName, sale.totalProfit);
+        }
+        
+        System.out.println("---------------------------------------------------------");
+        System.out.printf("Total profits: %.2f%n", totalReportProfit);
+    }
+    
+    public static void printInventoryListing(){
+        System.out.printf("Report date: %s%n", currentDate);
+        
+        // Print the listing header, to make it clearer.
+        System.out.printf("%-20s %-15s %-12s %-10s %-12s %-10s %-10s%n",
+                        "Name", "Category", "Price", "VAT (%)", "Code", "Units", "Threshold");
+
+        System.out.println("--------------------------------------------------------------------------------------------");
+
+        // Print each inventory row
+        for (int i = 0; i < inventoryDeviceQuantity; i++){
+            Device device = inventory[i];
+
+            // Numbers and negative sign are used to apply right or left alignment
+            // certain amount of spaces
+            System.out.printf("%-20s %-15s %-12.2f %-10.2f %-12s %-10d %-10d%n",
+                device.deviceName, device.category, device.salePrice,
+                device.VATPercentage, device.code, device.availableUnits,
+                device.minimumThreshold
+            );
+        }
+    }
+}
