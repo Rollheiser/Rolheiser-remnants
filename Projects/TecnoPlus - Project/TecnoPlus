@@ -3,162 +3,162 @@ import java.util.Scanner;
 
 public class TecnoPlus {
     static Scanner sc = new Scanner(System.in);
-    static boolean esValido;
-    static int cantidadProductos;
+    static boolean isValid;
+    static int productQuantity;
     
     public static void main(String[] args) {
-        System.out.println("Bienvenido al sistema de inventario de TecnoPlus.");
-        System.out.println("Este sistema sirve para interactuar con el inventario y realizar operaciones logísticas.");
+        System.out.println("Welcome to the TecnoPlus inventory system.");
+        System.out.println("This system is used to interact with inventory and perform logistics operations.");
         System.out.println();
-        System.out.println("En este, puedes: ");
-        System.out.println("- Registrar nuevos productos en el inventario.");
-        System.out.println("- Vender productos.");
-        System.out.println("- Reabastecer el inventario cuando sea necesario.");
-        System.out.println("- Generar informes tanto de las ventas realizadas como del inventario actual.");
+        System.out.println("In this system, you can: ");
+        System.out.println("- Register new products in the inventory.");
+        System.out.println("- Sell products.");
+        System.out.println("- Restock the inventory when necessary.");
+        System.out.println("- Generate reports for both sales made and current inventory.");
         System.out.println();
         
         while(true){
-            System.out.println("¿Desea realizar una operación? (Escriba si o no)");
-            String respuesta = sc.nextLine();
+            System.out.println("Do you want to perform an operation? (Type yes or no)");
+            String response = sc.nextLine();
             
-            // Recibimos la entrada y verificamos si continúamos o no.
-            if(respuesta.toLowerCase().equals("si")){
+            // We receive the input and verify whether to continue or not.
+            if(response.toLowerCase().equals("yes")){
                 break;
             }
-            else if(respuesta.toLowerCase().equals("no")){
+            else if(response.toLowerCase().equals("no")){
                 return;
             }
             else{
-                System.out.println("Error: Introduce una respuesta válida.");
+                System.out.println("Error: Enter a valid response.");
             }
         }
         
-        int numeroOperacion;
+        int operationNumber;
         while(true){
             System.out.println();
-            System.out.println("Perfecto. A continuación se muestran las posibles opciones: ");
-            System.out.println("1.- Registrar nuevos productos en el inventario.");
-            System.out.println("2.- Vender productos.");
-            System.out.println("3.- Reabastecer el inventario.");
-            System.out.println("4.- Generar informe del inventario actual.");
-            System.out.println("5.- Generar informe de las ventas realizadas.");
-            System.out.println("6.- Mostrar el inventario completo a detalle.");
+            System.out.println("Perfect. The following options are shown below: ");
+            System.out.println("1.- Register new products in the inventory.");
+            System.out.println("2.- Sell products.");
+            System.out.println("3.- Restock the inventory.");
+            System.out.println("4.- Generate current inventory report.");
+            System.out.println("5.- Generate sales report.");
+            System.out.println("6.- Show complete detailed inventory.");
             System.out.println();
-            System.out.println("Para realizar una operación, escriba el número asignado a la operación.");
-            System.out.println("Ejemplo: 1, la operación sería registrar nuevo producto.");
+            System.out.println("To perform an operation, type the number assigned to the operation.");
+            System.out.println("Example: 1, the operation would be register new product.");
             System.out.println();
             
             while(true){
-                System.out.print("Operación: ");
+                System.out.print("Operation: ");
 
-                numeroOperacion = sc.nextInt();
+                operationNumber = sc.nextInt();
 
-                if (numeroOperacion < 1 || numeroOperacion > 6) {
-                    System.out.println("Por favor introduzca un número entre 1 y 6.");
+                if (operationNumber < 1 || operationNumber > 6) {
+                    System.out.println("Please enter a number between 1 and 6.");
                 } else {
                     break;
                 }
             }
             
             System.out.println();
-            switch(numeroOperacion){
+            switch(operationNumber){
                 case 1:
-                    recibirNuevosProductos();
+                    receiveNewProducts();
                     break;
                 case 2:
-                    venderProductos();
+                    sellProducts();
                     break;
                 case 3:
-                    reabastecerInventarioTecnoPlus();
+                    restockTecnoPlusInventory();
                     break;
                 case 4:
-                    Inventario.imprimirInformeInventario();
+                    Inventory.printInventoryReport();
                     break;
                 case 5:
-                    Inventario.imprimirInformeVenta();
+                    Inventory.printSalesReport();
                     break;
                 case 6:
-                    Inventario.imprimirListadoInventario();
+                    Inventory.printInventoryListing();
                     break;
             }
             
             System.out.println();
             sc.nextLine();
             
-            // Uso bucles while(true) para repetir el bloque de código hasta
-            // recibir una entrada válida.
+            // I use while(true) loops to repeat the code block until
+            // receiving a valid input.
             while(true){
-                System.out.println("¿Desea realizar otra operación? (Escriba \"si\" para proceder, o \"no\" para parar).");
-                String respuesta = sc.nextLine();
+                System.out.println("Do you want to perform another operation? (Type \"yes\" to proceed, or \"no\" to stop).");
+                String response = sc.nextLine();
                 
-                if(respuesta.toLowerCase().equals("si")){
+                if(response.toLowerCase().equals("yes")){
                     break;
                 }
-                else if(respuesta.toLowerCase().equals("no")){
+                else if(response.toLowerCase().equals("no")){
                     return;
                 }
                 else{
-                    System.out.println("Error: Introduzca una respuesta válida.");
+                    System.out.println("Error: Enter a valid response.");
                     System.out.println();
                 }
             }
         }
     }
     
-    // De aquí para abajo están los métodos de cada operación,
-    // para mayor eficiencia y poder ser reutilizados cuando sea necesario.
-    public static void recibirNuevosProductos(){
+    // From here down are the methods for each operation,
+    // for greater efficiency and to be reused when necessary.
+    public static void receiveNewProducts(){
         do{  
-           System.out.println("¿Cuántos productos desea registrar?");
-           cantidadProductos = sc.nextInt();
+           System.out.println("How many products do you want to register?");
+           productQuantity = sc.nextInt();
             
-           esValido = verificarEsValido(cantidadProductos);
+           isValid = verifyIsValid(productQuantity);
            
-           if(!esValido){
-               System.out.println("Error: Introduzca una cantidad mayor a 0.");
+           if(!isValid){
+               System.out.println("Error: Enter a quantity greater than 0.");
            }
         } 
-        while(!esValido);
+        while(!isValid);
         
-        Dispositivo[] dispositivosActuales = Inventario.recibirDispositivos(cantidadProductos);
-        Inventario.registrarDispositivosInventario(dispositivosActuales);
+        Device[] currentDevices = Inventory.receiveDevices(productQuantity);
+        Inventory.registerDevicesInventory(currentDevices);
     }
     
-    public static void venderProductos(){
+    public static void sellProducts(){
         do{
-            System.out.println("¿Cuántos productos desea vender?");
-            cantidadProductos = sc.nextInt();
+            System.out.println("How many products do you want to sell?");
+            productQuantity = sc.nextInt();
             
-            esValido = verificarEsValido(cantidadProductos);
+            isValid = verifyIsValid(productQuantity);
             
-            if(!esValido){
-                System.out.println("Error: Introduzca una cantidad mayor a 0.");
+            if(!isValid){
+                System.out.println("Error: Enter a quantity greater than 0.");
             }
         }
-        while(!esValido);
+        while(!isValid);
         
-        Inventario.ventaDeDispositivo(cantidadProductos);
+        Inventory.sellDevice(productQuantity);
     }
     
-    public static void reabastecerInventarioTecnoPlus(){
+    public static void restockTecnoPlusInventory(){
         do{
-            System.out.println("¿Cuántos productos desea reabastecer?");
-            cantidadProductos = sc.nextInt();
+            System.out.println("How many products do you want to restock?");
+            productQuantity = sc.nextInt();
             
-            esValido = verificarEsValido(cantidadProductos);
+            isValid = verifyIsValid(productQuantity);
             
-            if(!esValido){
-                System.out.println("Error: Introduzca una cantidad mayor a 0.");
+            if(!isValid){
+                System.out.println("Error: Enter a quantity greater than 0.");
             }
         }
-        while(!esValido);
+        while(!isValid);
         
-        Inventario.reabastecerInventario(cantidadProductos);
+        Inventory.restockInventory(productQuantity);
     }
     
-    // Un método extra para validar la entrada.
-    public static boolean verificarEsValido(int numero){
-        if(numero <= 0){
+    // An extra method to validate the input.
+    public static boolean verifyIsValid(int number){
+        if(number <= 0){
             return false;
         }
         
