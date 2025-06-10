@@ -1,20 +1,20 @@
-public class Dispositivo {
-    // Se define la clase dispositivo
-    String nombreDispositivo;
-    String categoria;
-    float precio_venta;
-    float porcentaje_IVA;
-    String codigo;
-    int unidadesDisponibles;
-    int umbralMinimo;
-
-    public Dispositivo(String nombreDispositivo, String categoria, float precio_venta, float porcentaje_IVA, String codigo, int unidadesDisponibles, int umbralMinimo) {
-        this.nombreDispositivo = nombreDispositivo;
-        this.categoria = categoria;
-        this.precio_venta = precio_venta;
-        this.porcentaje_IVA = porcentaje_IVA;
-        this.codigo = codigo;
-        this.unidadesDisponibles = unidadesDisponibles;
-        this.umbralMinimo = umbralMinimo;
+public class Device {
+    // The device class is defined
+    String deviceName;
+    String category;
+    float salePrice;
+    float VATPercentage;
+    String code;
+    int availableUnits;
+    int minimumThreshold;
+    
+    public Device(String deviceName, String category, float salePrice, float VATPercentage, String code, int availableUnits, int minimumThreshold) {
+        this.deviceName = deviceName;
+        this.category = category;
+        this.salePrice = salePrice;
+        this.VATPercentage = VATPercentage;
+        this.code = code;
+        this.availableUnits = availableUnits;
+        this.minimumThreshold = minimumThreshold;
     }
 }
