@@ -1,4 +1,5 @@
 package tecnoplus;
+
 public class Sale {
     // A sale class to better record the total sales
     String productName;
