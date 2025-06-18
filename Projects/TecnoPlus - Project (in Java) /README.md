@@ -2,7 +2,7 @@ Hello, user.
 
 This is a project I made in Java, as you look over the code, you'll notice that some things could be better designed, 
 and I perfectly know, but bare in mind that this was a college's project of a course.
-So obviously some parts of the code look sketchy, but overall I tended to use good practices.
+So obviously I had some restrictions and some parts of the code look sketchy, but overall I tended to use good practices.
 
 ///// Description //////
 
