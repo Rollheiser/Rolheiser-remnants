@@ -1,0 +1,63 @@
+package basic_functions;
+import java.util.Scanner;
+
+public abstract class ATM_Functionality {
+    private static float balance;
+    protected float transaction, withdrawal, deposit;
+    protected Scanner sc = new Scanner(System.in);
+    
+    public void functionality() {
+        int numOperation;
+
+        while (true) {
+            System.out.println("Greetings, welcome to this program");
+            System.out.println("Please select an option (type the number corresponding to the option): ");
+            System.out.println("1. Check current balance.");
+            System.out.println("2. Withdraw of cash.");
+            System.out.println("3. Deposit of cash.");
+            System.out.println("4. Exit.");
+            System.out.println("");
+            
+            System.out.print("Option: ");
+            numOperation = sc.nextInt();
+            
+            if (numOperation < 1 || numOperation > 4) {
+                System.out.println("Error: Enter a valid option.");
+                System.out.println("");
+            } else {
+                break;
+            }
+        }
+        
+        switch (numOperation) {
+            case 1:
+                ATM_Functionality check = new Check_Balance();
+                check.operation();
+                break;
+            case 2:
+                ATM_Functionality withdraw = new Money_Withdrawal();
+                withdraw.operation();
+                break;
+            case 3:
+                ATM_Functionality depositFunction = new Money_Deposit();
+                depositFunction.operation();
+                break;
+            case 4:
+                System.out.println("-------------------------------------");
+                System.out.println("Thank you for using the service!");
+                System.out.println("-------------------------------------");
+                break;
+        }
+    }
+  
+    
+    public float getBalance() {
+        return this.balance;
+    }
+    
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
+    public abstract void operation();
+}
