@@ -1,0 +1,27 @@
+package basic_functions;
+
+public class Money_Deposit extends ATM_Functionality {
+    
+    @Override
+    public void operation() {
+        while (true) {            
+            System.out.print("Enter the amount of money you want to deposit: ");
+            this.deposit = this.sc.nextFloat();
+            
+            if (this.deposit > 0) {
+                break;
+            } else {
+                System.out.println("Error: Introduce a valid amount of money.");
+                System.out.println("");
+            }
+        }
+        
+        this.transaction = getBalance() + this.deposit;
+        this.setBalance(transaction);
+        
+        System.out.println("-------------------------------------");
+        System.out.println("Amount of deposit = " + this.deposit);
+        System.out.println("Current balance = " + getBalance());
+        System.out.println("-------------------------------------");
+    }
+}
