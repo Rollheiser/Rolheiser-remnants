@@ -1,0 +1,13 @@
+package main;
+
+import basic_functions.ATM_Functionality;
+import basic_functions.Check_Balance;
+
+public class ATM {
+    public static void main(String[] args) {
+        ATM_Functionality ATM = new Check_Balance();
+        
+        ATM.setBalance(1000);
+        ATM.functionality();
+    }
+}
