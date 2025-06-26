@@ -1,0 +1,33 @@
+package basic_functions;
+
+public class Money_Withdrawal extends ATM_Functionality {
+    
+    @Override
+    public void operation() {
+        while (true) {
+            System.out.print("Enter the amount of money you want to withdraw: ");
+            this.withdrawal = this.sc.nextFloat();
+
+            if (this.withdrawal > 0) {
+                break;
+            } else {
+                System.out.println("Error: Introduce a valid amount of money.");
+                System.out.println("");
+            }
+        }
+        
+        if (this.withdrawal <= getBalance()){
+            this.transaction = getBalance() - this.withdrawal;
+            
+            this.setBalance(transaction);
+            
+            System.out.println("");
+            System.out.println("-------------------------------------");
+            System.out.println("Withdraw = " + this.withdrawal);
+            System.out.println("Current balance = " + getBalance());
+            System.out.println("-------------------------------------");
+        } else {
+            System.out.println("Error: The amount of withdraw exceeds the current balance.");
+        }
+    }
+}
