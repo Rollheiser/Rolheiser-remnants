@@ -1,0 +1,12 @@
+package basic_functions;
+
+public class Check_Balance extends ATM_Functionality {
+    
+    @Override
+    public void operation() {
+        System.out.println("");
+        System.out.println("-------------------------------------");
+        System.out.println("Current balance = " + getBalance());
+        System.out.println("-------------------------------------");
+    }
+}
